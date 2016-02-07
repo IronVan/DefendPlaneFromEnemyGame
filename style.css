@@ -1,0 +1,30 @@
+body
+{
+	background: #333;
+}
+
+#gameName
+{
+	color: #fff;
+	font-family: Courier;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#map
+{
+	background: #fff;
+	display: block;
+	margin: 30px auto 0px;
+}
+
+#drawBtn
+{
+
+}
+
+#clearBtn
+{
+
+}
