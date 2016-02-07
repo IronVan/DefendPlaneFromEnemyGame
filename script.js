@@ -51,6 +51,9 @@ function init()
 
 	drawBg();
 	startLoop();
+
+	document.addEventListener("keydown", checkKeyDown, false);
+	document.addEventListener("keyup", checkKeyUp, false);
 }
 
 function loop()
@@ -94,8 +97,13 @@ function Player()
 	this.drawY=0;
 	this.width = 124;
 	this.height = 70;
-
 	this.speed = 5;
+
+	//For keys
+	this.isUp = false;
+	this.isDown = false;
+	this.isRigth = false;
+	this.isLeft = false;
 }
 function Enemy()
 {
@@ -119,8 +127,62 @@ Player.prototype.draw = function()
 
 Player.prototype.update = function()
 {
-	this.drawX += 3;
+	this.choseDir();
 	}
+
+Player.prototype.choseDir = function()
+{
+	if (this.isUp) this.drawY -= this.speed;
+	if (this.isDown) this.drawY += this.speed;
+	if (this.isRigth) this.drawX += this.speed;
+	if (this.isLeft) this.drawX -= this.speed;
+	}
+
+function checkKeyDown(e)
+{
+	var keyID = e.keyCode || e.which;
+	var keyChar = String.fromCharCode(keyID);
+
+	if (keyChar == "W") {
+		player.isUp = true;
+		e.preventDefault();
+	};
+	if (keyChar == "S") {
+		player.isDown = true;
+		e.preventDefault();
+	};
+	if (keyChar == "D") {
+		player.isRigth = true;
+		e.preventDefault();
+	};
+	if (keyChar == "A") {
+		player.isLeft = true;
+		e.preventDefault();
+	};
+}
+
+function checkKeyUp(e)
+{
+	var keyID = e.keyCode || e.which;
+	var keyChar = String.fromCharCode(keyID);
+
+	if (keyChar == "W") {
+		player.isUp = false;
+		e.preventDefault();
+	};
+	if (keyChar == "S") {
+		player.isDown = false;
+		e.preventDefault();
+	};
+	if (keyChar == "D") {
+		player.isRigth = false;
+		e.preventDefault();
+	};
+	if (keyChar == "A") {
+		player.isLeft = false;
+		e.preventDefault();
+	};
+}
 
 Enemy.prototype.draw = function()
 {
