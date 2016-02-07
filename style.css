@@ -19,6 +19,12 @@ body
 	margin: 30px auto 0px;
 }
 
+#player
+{
+	display: block;
+	margin: -500px auto 0px;
+}
+
 #drawBtn
 {
 
