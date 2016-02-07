@@ -20,6 +20,14 @@ tiles.src="tiles.png";
 var player;
 var enemy;
 
+var isPlaying;
+
+var requestAnimFrame = window.requestAnimationFrame ||
+					   window.webkitRequestAnimationFrame ||
+					   window.mozRequestAnimationFrame ||
+					   window.oRequestAnimationFrame ||
+					   window.msRequestAnimationFrame;
+
 function init()
 {
 	map = document.getElementById("map");
@@ -42,13 +50,39 @@ function init()
 	enemy = new Enemy();
 
 	drawBg();
-	draw();
+	startLoop();
+}
+
+function loop()
+{
+	if (isPlaying) 
+		{
+			draw();
+			update();
+			requestAnimFrame(loop);
+		};
+}
+
+function startLoop()
+{
+	isPlaying = true;
+	loop();
+}
+
+function stopLoop()
+{
+	isPlaying = false;
 }
 
 function draw()
 {
 	player.draw();
 	enemy.draw();
+}
+
+function update()
+{
+	player.update();
 }
 
 //Objects
@@ -67,7 +101,7 @@ function Enemy()
 {
 	this.scrX=0;
 	this.scrY=80;
-	this.drawX=200;
+	this.drawX=400;
 	this.drawY=50;
 	this.width = 60;
 	this.height = 60;
@@ -78,8 +112,14 @@ function Enemy()
 
 Player.prototype.draw = function()
 {
-	ctxMap.drawImage(tiles, this.scrX , this.scrY , this.width, this.height, 
+	clearCtxPlayer();
+	ctxPl.drawImage(tiles, this.scrX , this.scrY , this.width, this.height, 
 	this.drawX, this.drawY, this.width, this.height);
+	}
+
+Player.prototype.update = function()
+{
+	this.drawX += 3;
 	}
 
 Enemy.prototype.draw = function()
@@ -92,6 +132,11 @@ function drawRect()
 {
 	ctxMap.fillStyle = "#3d3d3d";
 	ctxMap.fillRect(10, 10, 100, 100);
+}
+
+function clearCtxPlayer()
+{
+	ctxPl.clearRect(0, 0, gameWidth, gameHeigth);
 }
 
 function clearRect()
