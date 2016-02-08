@@ -25,6 +25,11 @@ var enemies = [];
 
 var isPlaying;
 
+//For creating enemies
+var spawnInterval;
+var spawnTime = 10000;
+var spawnAmount = 3;
+
 var requestAnimFrame = window.requestAnimationFrame ||
 					   window.webkitRequestAnimationFrame ||
 					   window.mozRequestAnimationFrame ||
@@ -71,6 +76,18 @@ function spawnEnemy(count)
 	};
 }
 
+function startCreatingEnemies()
+{
+	stopCreatingEnemies();
+	spawnInterval = setInterval(function(){spawnEnemy(spawnAmount);}, spawnTime);
+}
+
+function stopCreatingEnemies()
+{
+	clearInterval(spawnInterval);
+}
+
+
 function loop()
 {
 	if (isPlaying) 
@@ -85,6 +102,7 @@ function startLoop()
 {
 	isPlaying = true;
 	loop();
+	startCreatingEnemies();
 }
 
 function stopLoop()
