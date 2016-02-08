@@ -19,12 +19,12 @@ var gameWidth = 800;
 var gameHeigth = 500;
 
 var background = new Image();
-background.src="game-background.jpg";
+background.src="img/game-background.jpg";
 var background1 = new Image();
-background1.src="game-background.jpg";
+background1.src="img/game-background.jpg";
 
 var tiles = new Image();
-tiles.src="tiles.png";
+tiles.src="img/tiles.png";
 
 var player;
 var enemies = [];
@@ -35,10 +35,15 @@ var health;
 var mapX = 0;
 var map1X = gameWidth;
 
+var mouseX;
+var mouseY;
+
 //For creating enemies
 var spawnInterval;
 var spawnTime = 6000;
 var spawnAmount = 5;
+
+var mouseControl = true;
 
 var requestAnimFrame = window.requestAnimationFrame ||
 					   window.webkitRequestAnimationFrame ||
@@ -82,8 +87,29 @@ function init()
 	resetHealth();
 	startLoop();
 
+	document.addEventListener("mousemove", mouseMove, false);
+	document.addEventListener("click", mouseClick, false);
 	document.addEventListener("keydown", checkKeyDown, false);
 	document.addEventListener("keyup", checkKeyUp, false);
+}
+
+function mouseMove(e)
+{
+	if (!mouseControl) return;
+	mouseX = e.pageX - map.offsetLeft;
+	mouseY = e.pageY - map.offsetTop;
+	player.drawX = mouseX - player.width/2;
+	player.drawY = mouseY - player.height/2;
+
+	document.getElementById("gameName").innerHTML = "X:" + mouseX + " Y:" + mouseY;
+}
+
+function mouseClick(e)
+{
+	if (!mouseControl) return;
+	/*player.drawX = mouseX - player.width/2;
+	player.drawY = mouseY - player.height/2;*/
+	document.getElementById("gameName").innerHTML = "Clicked";
 }
 
 function resetHealth()
