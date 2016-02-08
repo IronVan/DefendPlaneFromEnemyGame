@@ -19,7 +19,7 @@ body
 	margin: 30px auto 0px;
 }
 
-#player
+#player, #enemy
 {
 	display: block;
 	margin: -500px auto 0px;
