@@ -9,6 +9,9 @@ var ctxPl;
 var enemyCvs;
 var ctxEnemy;
 
+var stats;
+var ctxStats;
+
 var drawBtn;
 var clearBtn;
 
@@ -47,23 +50,32 @@ function init()
 	enemyCvs = document.getElementById("enemy");
 	ctxEnemy = enemyCvs.getContext("2d");
 
+	stats = document.getElementById("stats");
+	ctxStats = stats.getContext("2d");
+
 	map.width = gameWidth;
 	map.height = gameHeigth;
 	pl.width = gameWidth;
 	pl.height = gameHeigth;
 	enemyCvs.width = gameWidth;
 	enemyCvs.height = gameHeigth;
+	stats.width = gameWidth;
+	stats.height = gameHeigth;
 
-	drawBtn = document.getElementById("drawBtn");
-	clearBtn = document.getElementById("clearBtn");
-	drawBtn.addEventListener("click", drawRect, false);
-	clearBtn.addEventListener("click", clearRect, false);
+	ctxStats.fillStyle = "#3d3d3d";
+	ctxStats.font = "bold 15pt Arial";
+
+	// drawBtn = document.getElementById("drawBtn");
+	// clearBtn = document.getElementById("clearBtn");
+	// drawBtn.addEventListener("click", drawRect, false);
+	// clearBtn.addEventListener("click", clearRect, false);
 
 	player = new Player();
 	//enemy = new Enemy();
 
 	drawBg();
 	startLoop();
+	updateStats();
 
 	document.addEventListener("keydown", checkKeyDown, false);
 	document.addEventListener("keyup", checkKeyUp, false);
@@ -239,12 +251,18 @@ Enemy.prototype.draw = function()
 Enemy.prototype.update = function()
 {
 	this.drawX -= 7;
-	if (this.drawX<0) 
+	if (this.drawX + this.width < 0) 
 		{
-		this.drawX = Math.floor(Math.random() * gameWidth) + gameWidth;
+		/*this.drawX = Math.floor(Math.random() * gameWidth) + gameWidth;
 		this.drawY = Math.floor(Math.random() * gameHeigth);
-		if (this.drawY>400) this.drawY -= 100;
+		if (this.drawY>400) this.drawY -= 100;*/
+		this.destroy();
 		};
+}
+
+Enemy.prototype.destroy = function()
+{
+	enemies.splice(enemies.indexOf(this), 1);
 }
 
 function drawRect()
@@ -263,10 +281,16 @@ function clearCtxEnemy()
 	ctxEnemy.clearRect(0, 0, gameWidth, gameHeigth);
 }
 
-function clearRect()
+function updateStats()
+{
+	ctxStats.clearRect(0, 0, gameWidth, gameHeigth);
+	ctxStats.fillText("Player", 20, 20);
+}
+
+/*function clearRect()
 {
 	ctxMap.clearRect(0, 0, 800, 500);
-}
+}*/
 
 function drawBg()
 {

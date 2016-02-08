@@ -12,14 +12,13 @@ body
 	text-align: center;
 }
 
-#map
+canvas
 {
-	background: #fff;
 	display: block;
 	margin: 30px auto 0px;
 }
 
-#player, #enemy
+#player, #enemy, #stats
 {
 	display: block;
 	margin: -500px auto 0px;
